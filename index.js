@@ -90,7 +90,7 @@ app.get('/food-item-by-id', (req, res) => {
 app.get('/delete-food-item-by-id', (req, res) => {
     const id = req.query.id
 
-    db.forEach((item, index)=>{
+    db.forEach((item, index) => {
         if (item.id == id) {
             db.splice(index, 1)
             return res.json({
@@ -106,6 +106,26 @@ app.get('/delete-food-item-by-id', (req, res) => {
         message: 'food item deleted successfully '
     })
 })
+
+
+// search
+app.get('/food-items-by-category', (req, res) => {
+    const category = req.query.category
+
+    const temp = []
+
+    db.forEach((item) => {
+        if (item.category === category) {
+           temp.push(item)
+        }
+    })
+    res.json({
+        success: true,
+        data: temp,
+        message: `Food items for ${category} fetched successfully`
+    })
+})
+
 
 
 app.listen(5000, () => {
